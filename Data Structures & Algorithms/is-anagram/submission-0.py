@@ -1,14 +1,11 @@
-from collections import Counter
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        strings = Counter(s)
-        
-        for word in t:
-            if word not in strings or strings[word] <=0:
-                return False
-            
-            strings[word]-=1
-        
-        ans = [x for x in strings if strings[x]>0]
+        if len(s) != len(t):
+            return False
 
-        return True if len(ans)==0 else False
+        countS, countT = {}, {}
+
+        for i in range(len(s)):
+            countS[s[i]] = 1 + countS.get(s[i], 0)
+            countT[t[i]] = 1 + countT.get(t[i], 0)
+        return countS == countT
