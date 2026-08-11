@@ -1,3 +1,3 @@
 class Solution:
-    def getConcatenation(self, nums: List[int]) -> List[int]:
-        return nums+nums
+        def hasDuplicate(self, nums: List[int]) -> bool:
+            return len(nums) != len(set(nums))
