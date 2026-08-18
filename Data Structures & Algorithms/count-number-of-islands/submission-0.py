@@ -1,36 +1,28 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        directions = [(0,1),(1,0),(-1,0),(0,-1)]
+        rows, cols = len(grid), len(grid[0])
+        visit = set()
+        island = 0
 
-        def explore(grid, r, c, visited):
-            row_in = 0 <= r < len(grid)
-            col_in = 0 <= c < len(grid[0])
-            directions = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+        def dfs(r,c):
+            row_in = 0 <= r < rows
+            col_in = 0 <= c < cols
 
-            if not row_in or not col_in:
-                return False
+            if not row_in or not col_in or grid[r][c] == '0' or (r,c) in visit:
+                return
             
-            if (r, c) in visited:
-                return False
+            visit.add((r,c))
+            for nr, nc in directions:
+                dr, dc = nr + r, nc + c
+                dfs(dr, dc)
             
-            if grid[r][c] == "0":
-                return False
-            
-            visited.add((r,c))
-            for x, y in directions:
-                explore(grid, r+x, c+y, visited)
-            
-            return True
-
-        ROWS = len(grid)
-        COLS = len(grid[0])
-        max_size = 0
-        visited = set() # { (row, col) }
-
-        for r in range(ROWS):
-            for c in range(COLS):
-                if explore(grid, r, c, visited):
-                    max_size+=1
+            return
         
-        return max_size
-    
-
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == "1" and (r,c) not in visit:
+                    dfs(r,c)
+                    island+=1
+        
+        return island
