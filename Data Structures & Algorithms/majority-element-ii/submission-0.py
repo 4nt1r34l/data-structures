@@ -1,8 +1,10 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
-        mapping = Counter(nums)
-        major = len(nums)//3
+        count = Counter(nums)
+        res = []
 
-        res = [x for x in mapping if mapping[x]>major]
+        for key in count:
+            if count[key] > len(nums) // 3:
+                res.append(key)
 
         return res
