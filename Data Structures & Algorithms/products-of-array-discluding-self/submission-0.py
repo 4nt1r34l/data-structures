@@ -1,15 +1,15 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        res = []
+        prefix = []
+        curProd = 1
 
-        for i in range(len(nums)):
-            prod = 1
-            for j in range(len(nums)):
-                if i==j:
-                    continue
-                prod*=nums[j]
-            
-            res.append(prod)
+        for n in nums:
+            prefix.append(curProd)
+            curProd *= n
         
-        return res
-
+        curProd = 1
+        for n in range(len(nums)-1, -1, -1):
+            prefix[n] *= curProd
+            curProd *= nums[n]
+        
+        return prefix
